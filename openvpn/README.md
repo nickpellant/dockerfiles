@@ -9,17 +9,20 @@
 I maintain a collection of functions for running Docker containers. This is my recommendation:
 
 ```bash
-openvpn() {
-  local conf=$1
-
-  docker run -d \
-    --cap-add NET_ADMIN \
-    --device /dev/net/tun \
-    --name openvpn \
-    --net host \
-    --restart always \
-    -v $HOME/.config/openvpn:/etc/openvpn \
-    nickpellant/openvpn \
-    --config /etc/openvpn/$conf
+couchpotato() {
+	docker run -d \
+		--name couchpotato \
+		--restart always \
+		-p 5050:5050 \
+		-v /etc/localtime:/etc/localtime:ro \
+		-v /media/downloads:/media/downloads \
+		-v $HOME/.config/couchpotato:/etc/couchpotato \
+    -v /media/movies:/media/movies \
+		nickpellant/couchpotato
 }
 ```
+
+### Custom
+
+* Link any containers you use for downloading (i.e. sabnzbd or transmission)
+* Mount volumes for storing/processing downloads on the host machine
